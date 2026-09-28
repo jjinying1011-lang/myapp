@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Controllers;
+
+
+use Illuminate\Http\Request;
+use App\Models\Blog;
+
+class BlogController extends Controller
+{
+    public function index()
+    {
+        $blogs = Blog::orderByDesc('id')->where('status', 1)->get();
+        return view('index', compact('blogs'));
+    }
+
+    public function detail($id)
+    {
+        $blogs = Blog::find($id);
+        return view('detail', compact('blogs'));
+
+    }
+
+}
