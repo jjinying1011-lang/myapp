@@ -211,7 +211,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto gap-1">
+            <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('index') ? 'active' : '' }}" href="{{ route('index') }}">หน้าแรก (Admin Blogs)</a>
                 </li>
@@ -223,6 +223,14 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Route::is('abouts') ? 'active' : '' }}" href="{{ route('abouts') }}">เกี่ยวกับเรา</a>
+                </li>
+                <li class="nav-item ms-lg-3 d-flex align-items-center gap-2 mt-2 mt-lg-0">
+                    <span class="navbar-text text-white small" style="font-weight: 500;">
+                        👋 สวัสดี, <span style="color: #ffd1e4; font-weight: 700;">{{ session('user_logged_in', 'Phakhanan Wangdee') }}</span>
+                    </span>
+                    <a href="{{ route('logout') }}" class="btn btn-outline-light btn-sm px-2.5 py-1" style="border-radius: 8px; font-size: 0.8rem; border-color: rgba(255,255,255,0.3);">
+                        ออกจากระบบ
+                    </a>
                 </li>
             </ul>
         </div>

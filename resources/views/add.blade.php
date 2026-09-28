@@ -11,20 +11,34 @@
     
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            --secondary-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            --dark-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            --body-bg: #f8fafc;
-            --text-dark: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
-            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            /* Milk-pink palette */
+            --milk-bg: #fff8fb;
+            --pink-50: #fff0f6;
+            --pink-100: #ffe1ec;
+            --pink-200: #ffc9dd;
+            --pink-300: #ffa8c9;
+            --pink-400: #ff86b3;
+            --pink-500: #f4699c;
+            --plum-900: #5c2a44;
+            --plum-800: #7a3559;
+
+            --primary-gradient: linear-gradient(135deg, #ffb3d1 0%, #f4699c 100%);
+            --secondary-gradient: linear-gradient(135deg, #ffd7e6 0%, #ffb3d1 100%);
+            --dark-gradient: linear-gradient(135deg, #7a3559 0%, #5c2a44 100%);
+            --body-bg: var(--milk-bg);
+            --text-dark: #4a2438;
+            --text-muted: #a6829a;
+            --border-color: #fbdce9;
+            --card-shadow: 0 10px 25px -5px rgba(244, 105, 156, 0.10), 0 8px 10px -6px rgba(244, 105, 156, 0.08);
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', 'Noto Sans Thai', sans-serif;
             background-color: var(--body-bg);
+            background-image: radial-gradient(circle at 8% 0%, var(--pink-50) 0%, transparent 45%),
+                radial-gradient(circle at 100% 20%, var(--pink-100) 0%, transparent 35%);
+            background-attachment: fixed;
             color: var(--text-dark);
             min-height: 100vh;
         }
@@ -37,43 +51,47 @@
         .card-modern {
             background: #ffffff;
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 18px;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
         }
 
         .card-modern:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 20px 25px -5px rgba(244, 105, 156, 0.14), 0 10px 10px -5px rgba(244, 105, 156, 0.08);
         }
 
         .form-control, .form-select {
             border-radius: 12px;
             padding: 0.8rem 1rem;
             border-color: var(--border-color);
+            background-color: var(--pink-50);
+            color: var(--text-dark);
             transition: var(--transition);
         }
 
         .form-control:focus, .form-select:focus {
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
-            border-color: #6366f1;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(244, 105, 156, 0.18);
+            border-color: var(--pink-400);
+            color: var(--text-dark);
         }
 
         .btn-modern-primary {
             background: var(--primary-gradient);
             color: #ffffff;
             border: none;
-            border-radius: 10px;
-            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            padding: 0.65rem 1.5rem;
             font-weight: 600;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
+            box-shadow: 0 4px 14px rgba(244, 105, 156, 0.35);
             transition: var(--transition);
             text-decoration: none;
         }
 
         .btn-modern-primary:hover {
             transform: translateY(-1px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+            box-shadow: 0 6px 20px rgba(244, 105, 156, 0.5);
             color: #ffffff;
             opacity: 0.95;
         }
@@ -82,17 +100,17 @@
             background: #ffffff;
             color: var(--text-dark);
             border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            padding: 0.65rem 1.5rem;
             font-weight: 600;
             transition: var(--transition);
             text-decoration: none;
         }
 
         .btn-modern-secondary:hover {
-            background: #f1f5f9;
+            background: var(--pink-50);
             color: var(--text-dark);
-            border-color: #cbd5e1;
+            border-color: var(--pink-300);
         }
     </style>
 </head>
@@ -109,7 +127,7 @@
         </div>
     </div>
 
-    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-5">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
         <div>
             <h1 class="fw-extrabold tracking-tight mb-1" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 2rem;">
                 เพิ่มสมาชิกใหม่
@@ -125,22 +143,22 @@
         <form action="#" method="GET" onsubmit="alert('จำลองการส่งข้อมูลสำเร็จ (ยังไม่ลง Database)'); return false;">
             
             <div class="mb-4">
-                <label class="form-label fw-semibold text-dark mb-2">ชื่อ-นามสกุล</label>
-                <input type="text" class="form-control" placeholder="เช่น สมชาย ใจดี" required>
+                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">ชื่อ-นามสกุล</label>
+                <input type="text" class="form-control" placeholder="เช่น ภคนันต์ หวังดี" required>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold text-dark mb-2">อีเมล</label>
-                <input type="email" class="form-control" placeholder="เช่น somchai@example.com" required>
+                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อีเมล</label>
+                <input type="email" class="form-control" placeholder="เช่น phakhanan.w@example.com" required>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold text-dark mb-2">เบอร์โทรศัพท์</label>
-                <input type="tel" class="form-control" placeholder="เช่น 081-234-5678" required>
+                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">เบอร์โทรศัพท์</label>
+                <input type="tel" class="form-control" placeholder="เช่น 089-123-4567" required>
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold text-dark mb-2">สถานะการใช้งาน</label>
+                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">สถานะการใช้งาน</label>
                 <select class="form-select">
                     <option value="active">🟢 ใช้งานอยู่ (Active)</option>
                     <option value="inactive">🔴 ระงับการใช้งาน (Inactive)</option>
@@ -148,11 +166,11 @@
             </div>
 
             <div class="mb-4">
-                <label class="form-label fw-semibold text-dark mb-2">อัปโหลดรูปโปรไฟล์</label>
+                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อัปโหลดรูปโปรไฟล์</label>
                 <input type="file" class="form-control" accept="image/*">
             </div>
 
-            <hr class="my-5" style="border-color: #e2e8f0;">
+            <hr class="my-4" style="border-color: var(--border-color);">
 
             <div class="d-flex justify-content-end gap-3">
                 <a href="{{ route('home') }}" class="btn-modern-secondary">ยกเลิก</a>
