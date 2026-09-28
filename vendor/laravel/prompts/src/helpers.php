@@ -4,7 +4,6 @@ namespace Laravel\Prompts;
 
 use Closure;
 use Illuminate\Support\Collection;
-use Laravel\Prompts\Elements\ElementContract;
 
 if (! function_exists('\Laravel\Prompts\text')) {
     /**
@@ -258,18 +257,6 @@ if (! function_exists('\Laravel\Prompts\note')) {
     function note(string $message, ?string $type = null): void
     {
         (new Note($message, $type))->display();
-    }
-}
-
-if (! function_exists('\Laravel\Prompts\callout')) {
-    /**
-     * Display a callout.
-     *
-     * @param  string|list<string|ElementContract>  $content
-     */
-    function callout(string $label, string|array $content, ?string $type = null, string $info = ''): void
-    {
-        (new Callout($label, $content, $type, $info))->display();
     }
 }
 

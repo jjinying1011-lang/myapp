@@ -8,7 +8,7 @@
     <div class="container">
         <div class="mb-5 text-center text-sm-start">
             <h1 class="fw-extrabold tracking-tight mb-2" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
-                เกี่ยวกับเรา555
+                เกี่ยวกับเรา
             </h1>
             <p class="text-muted mb-0">ข้อมูลเกี่ยวกับผู้พัฒนาและจุดประสงค์ของระบบนี้</p>
         </div>
@@ -57,7 +57,7 @@
                         </div>
                     </div>
                     <h5 class="fw-bold text-dark mb-3">ติดต่อผู้พัฒนา</h5>
-                    <p class="text-muted mb-0">หากต้องการสอบถามเพิ่มเติมหรือแนะนำคำติชมสำหรับระบบ สามารถส่งข้อความติดต่อได้ที่อีเมล <a href="mailto:phakhanan@example.com" class="text-decoration-none fw-bold" style="color: #4f46e5;">phakhanan@example.com</a></p>
+                    <p class="text-muted mb-0">หากต้องการสอบถามเพิ่มเติมหรือแนะนำคำติชมสำหรับระบบ สามารถส่งข้อความติดต่อได้ที่อีเมล <a href="mailto:phakhanan.wangdee@example.com" class="text-decoration-none fw-bold" style="color: #4f46e5;">phakhanan.wangdee@example.com</a></p>
                 </div>
             </div>
         </div>

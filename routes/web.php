@@ -1,42 +1,49 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\BlogController;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\AdminController;
 
+Route::get('/', [AdminController::class, 'index'])->name('index');
 
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
 
-
-
-// // สามารถส่งคำขอสมัครสมาชิกได้โดยไม่ต้องแนบ Token
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
-//นักอ่าน
-Route::get('/', [BlogController::class, 'index'])->name('index');
-Route::get('detail/{id}',[BlogController::class,'detail'])->name('detail');
-
-
-// Route::get('/', [AdminController::class, 'index'])->name('index');
-Route::get('/blog2', [AdminController::class, 'blog2'])->name('blog2')->middleware('auth');
-
-// เอา .name('author.') ออก เพื่อให้เรียก route('insert') ได้ตามปกติ
-Route::prefix('author')->group(function () {
-    Route::get('/change/{id}', [AdminController::class, 'change'])->name('change');
-    Route::get('/about', [AdminController::class, 'about'])->name('about');
-    Route::get('/blog', [AdminController::class, 'blog'])->name('blog');
-    Route::get('/insert', [AdminController::class, 'create'])->name('create');
-    Route::post('/insert', [AdminController::class, 'insert'])->name('insert');
-    Route::get('/delete/{id}', [AdminController::class, 'delete'])->name('delete');
-    Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [AdminController::class, 'update'])->name('update');
+Route::post('/login-process', function (Request $request) {
+    $username = $request->input('username');  
+    return redirect()->route('home')->with('user_logged_in', $username);
 });
 
-Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/back', [AdminController::class, 'goBack'])->name('back');
+Route::get('/home', function () {
+    $latestBlogs = \Illuminate\Support\Facades\DB::table('blogs')->orderBy('id', 'desc')->take(5)->get();
+    $totalBlogs = \Illuminate\Support\Facades\DB::table('blogs')->count();
+    return view('home', compact('latestBlogs', 'totalBlogs'));
+})->name('home');
 
+Route::get('/logout', function () {
+    return redirect()->route('login');
+})->name('logout');
+
+Route::get('/add', function () {
+    return view('add'); 
+})->name('add');
+
+
+Route::get('/abouts', function () {
+    $name = "Phakhanan Wangdee";
+    $date = date("Y-m-d");
+    return view('abouts', compact('name', 'date')); 
+})->name('abouts');
+
+Route::get('/blogs', function () {
+    $blogs = \Illuminate\Support\Facades\DB::table('blogs')->orderBy('id', 'desc')->paginate(5);
+    return view('blogs', compact('blogs'));
+})->name('blogs');
+
+Route::delete('/delete/{id}', [AdminController::class, 'delete'])->name('blog.delete');
+Route::get('/blog/create', [AdminController::class, 'create'])->name('blog.create');
+Route::post('/blog/store', [AdminController::class, 'insert'])->name('blog.store');
+Route::get('/blog', [AdminController::class, 'blog'])->name('blog');
+Route::get('/blog/edit/{id}', [AdminController::class, 'edit'])->name('blog.edit');
+Route::put('/blog/update/{id}', [AdminController::class, 'update'])->name('blog.update');

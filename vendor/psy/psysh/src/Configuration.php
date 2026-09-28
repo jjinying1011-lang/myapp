@@ -1838,18 +1838,11 @@ class Configuration
     public function getOutput(): ShellOutput
     {
         if (!isset($this->output)) {
-            // `true` means "use the built-in userland pager"; we can't
-            // construct it here because the interactive readline hasn't
-            // booted yet. Start with no pager and let Shell wire it up.
-            $pagerArg = $this->getPager();
-            if ($pagerArg === true) {
-                $pagerArg = null;
-            }
             $this->setOutput(new ShellOutput(
                 $this->getOutputVerbosity(),
                 null,
                 null,
-                $pagerArg ?: null,
+                $this->getPager() ?: null,
                 $this->theme()
             ));
 
@@ -1902,16 +1895,14 @@ class Configuration
     /**
      * Set the OutputPager service.
      *
-     * Accepted values:
-     *   - `false` (or `null`, or `'cat'`): never page.
-     *   - `true`: use the built-in userland pager when interactive readline
-     *     is active.
-     *   - a string command: shell out to that command via ProcOutputPager.
-     *   - an OutputPager instance: use it directly.
+     * If a string is supplied, a ProcOutputPager will be used which shells out
+     * to the specified command.
      *
-     * @throws \InvalidArgumentException if $pager is not one of the above
+     * `cat` is special-cased to use the PassthruPager directly.
      *
-     * @param string|OutputPager|bool|null $pager
+     * @throws \InvalidArgumentException if $pager is not a string or OutputPager instance
+     *
+     * @param string|OutputPager|false $pager
      */
     public function setPager($pager)
     {
@@ -1919,7 +1910,7 @@ class Configuration
             $pager = false;
         }
 
-        if ($pager !== false && $pager !== true && !\is_string($pager) && !$pager instanceof OutputPager) {
+        if ($pager !== false && !\is_string($pager) && !$pager instanceof OutputPager) {
             throw new \InvalidArgumentException('Unexpected pager instance');
         }
 
@@ -1940,20 +1931,10 @@ class Configuration
      * If no Pager has been explicitly provided, and Pcntl is available, this
      * will default to `cli.pager` ini value, falling back to `which less`.
      *
-     * @return string|OutputPager|bool
+     * @return string|OutputPager|false
      */
     public function getPager()
     {
-        // When the interactive readline is configured, prefer the built-in
-        // userland pager. Wired up by Shell after the readline boots.
-        if (!isset($this->pager)
-            && $this->useExperimentalReadline()
-            && $this->getInputInteractive()
-            && Readline\InteractiveReadline::isSupported()
-        ) {
-            return true;
-        }
-
         if (!isset($this->pager) && $this->usePcntl()) {
             if (\getenv('TERM') === 'dumb') {
                 return false;

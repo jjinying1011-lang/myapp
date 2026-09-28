@@ -16,11 +16,11 @@ class BlogFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-{
-    return [
-        'title' => $this->faker->sentence,
-        'content' => $this->faker->text(),
-        'status' => rand(0, 1),
-    ];
-}
+    {
+        return [
+            'title' => $this->faker->sentence(),
+            'content' => $this->faker->paragraph(),
+            'status' => $this->faker->boolean(80), // 80% chance of being true
+        ];
+    }
 }

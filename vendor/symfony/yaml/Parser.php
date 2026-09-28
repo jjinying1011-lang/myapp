@@ -1191,7 +1191,7 @@ class Parser
             if ($this->isCurrentLineBlank()) {
                 $previousLineWasNewline = true;
                 $previousLineWasTerminatedWithBackslash = false;
-            } elseif ('"' === $quotation && 1 === (\strlen($this->currentLine) - \strlen(rtrim($this->currentLine, '\\'))) % 2) {
+            } elseif ('\\' === $this->currentLine[-1]) {
                 $previousLineWasNewline = false;
                 $previousLineWasTerminatedWithBackslash = true;
             } else {
@@ -1225,18 +1225,6 @@ class Parser
 
         if ($cursor === $offset) {
             throw new ParseException('Malformed unquoted YAML string.');
-        }
-
-        return substr($this->currentLine, $offset, $cursor - $offset);
-    }
-
-    private function lexInlineAnchorOrAlias(int &$cursor): string
-    {
-        $offset = $cursor;
-        ++$cursor;
-
-        while ($cursor < \strlen($this->currentLine) && !\in_array($this->currentLine[$cursor], [' ', "\t", ',', '[', ']', '{', '}'], true)) {
-            ++$cursor;
         }
 
         return substr($this->currentLine, $offset, $cursor - $offset);
@@ -1276,10 +1264,6 @@ class Parser
                         break;
                     case '[':
                         $value .= $this->lexInlineSequence($cursor, false);
-                        break;
-                    case '&':
-                    case '*':
-                        $value .= $this->lexInlineAnchorOrAlias($cursor);
                         break;
                     case $closingTag:
                         $value .= $this->currentLine[$cursor];

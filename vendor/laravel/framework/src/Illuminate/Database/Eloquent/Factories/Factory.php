@@ -485,10 +485,6 @@ abstract class Factory
             ? $made
             : $this->newModel()->newCollection([$made]);
 
-        if ($madeCollection->isEmpty()) {
-            return;
-        }
-
         $model = $madeCollection->first();
 
         if (isset($this->connection)) {

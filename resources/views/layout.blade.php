@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('title') | Phakhanan</title>
+    <title>@yield('title') | Phakhanan Wangdee</title>
     <!-- Bootstrap 5.3.3 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Thai -->
@@ -206,7 +206,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="{{ route('index') }}">PHAKHANAN-PROJECT</a>
+        <a class="navbar-brand" href="{{ route('index') }}">PHAKHANAN WANGDEE</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -238,7 +238,7 @@
 
     <footer>
         <div class="container text-center">
-            <p class="mb-0">© {{ date('Y') }} PHAKHANAN-PROJECT. Crafted with Passion & Modern Aesthetics.</p>
+            <p class="mb-0">© {{ date('Y') }} Phakhanan Wangdee. Crafted with Passion & Modern Aesthetics.</p>
         </div>
     </footer>
 

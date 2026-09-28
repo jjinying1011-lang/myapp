@@ -4,7 +4,6 @@ namespace Laravel\Prompts\Concerns;
 
 use InvalidArgumentException;
 use Laravel\Prompts\AutoCompletePrompt;
-use Laravel\Prompts\Callout;
 use Laravel\Prompts\Clear;
 use Laravel\Prompts\ConfirmPrompt;
 use Laravel\Prompts\DataTablePrompt;
@@ -27,7 +26,6 @@ use Laravel\Prompts\Task;
 use Laravel\Prompts\TextareaPrompt;
 use Laravel\Prompts\TextPrompt;
 use Laravel\Prompts\Themes\Default\AutoCompletePromptRenderer;
-use Laravel\Prompts\Themes\Default\CalloutRenderer;
 use Laravel\Prompts\Themes\Default\ClearRenderer;
 use Laravel\Prompts\Themes\Default\ConfirmPromptRenderer;
 use Laravel\Prompts\Themes\Default\DataTableRenderer;
@@ -87,7 +85,6 @@ trait Themes
             Stream::class => StreamRenderer::class,
             Task::class => TaskRenderer::class,
             DataTablePrompt::class => DataTableRenderer::class,
-            Callout::class => CalloutRenderer::class,
         ],
     ];
 

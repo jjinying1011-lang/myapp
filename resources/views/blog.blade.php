@@ -1,134 +1,126 @@
-@extends('layouts.app')
+@extends('layout')
 
-@section('title', 'บทความทั้งหมด (Blog Feed)')
+@section('title')
+    บทความ
+@endsection
 
 @section('content')
-<div class="py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Header Section -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+    <div class="container">
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4" role="alert"
+                style="border-radius: 12px; background-color: #ecfdf5; color: #065f46;">
+                <span class="me-2">🎉</span> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-alert="close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+            </div>
+        @endif
+
+        <div
+            class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-5">
             <div>
-                <div class="flex items-center gap-2 text-sm text-pink-600/80 font-medium mb-1">
-                    <span>คลังเนื้อหา</span>
-                    <span>/</span>
-                    <span class="text-pink-600 font-bold">บทความทั้งหมด</span>
-                </div>
-                <h1 class="text-3xl font-black text-slate-800 tracking-tight flex items-center gap-2">
-                    <span>📖</span> บทความทั้งหมด (Blog Feed)
+                <h1 class="fw-extrabold tracking-tight mb-1"
+                    style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">
+                    รายการบทความทั้งหมด
                 </h1>
-                <p class="text-slate-500 text-sm mt-1">อ่านบทความ สาระน่ารู้ และเรื่องราวที่น่าสนใจ</p>
+                <p class="text-muted mb-0">จัดการ แก้ไข และดูข้อมูลบทความในระบบทั้งหมด</p>
             </div>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('blog2') }}" 
-                   class="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold text-pink-700 bg-white border border-pink-200 hover:bg-pink-50 rounded-xl shadow-xs transition">
-                    <svg class="w-4 h-4 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 3m0-3a2 2 0 110 3m-3.793-3a3 3 0 01-2.17-1.025M15.793 3a3 3 0 012.17-1.025M3 18v-2a4 4 0 014-4h10a4 4 0 014 4v2m-3-10a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    ระบบหลังบ้าน (Admin)
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ route('blog.create') }}" class="btn-modern-primary text-decoration-none">
+                    ✨ เขียนบทความใหม่
                 </a>
-                <a href="{{ route('create') }}" 
-                   class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 active:scale-[0.98] rounded-xl shadow-md shadow-pink-500/25 transition">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path>
-                    </svg>
-                    เขียนบทความใหม่
-                </a>
+                <span class="badge fs-6 py-2 px-3"
+                    style="background: var(--pink-100); color: var(--plum-900); border-radius: 30px; font-weight: 600;">
+                    ทั้งหมด {{ $blogs->total() }} รายการ
+                </span>
             </div>
         </div>
 
-        <!-- Table Card Layout (Pink Milk Soft Card) -->
-        <div class="bg-white rounded-3xl shadow-lg shadow-pink-100/50 border border-pink-100 overflow-hidden">
-            @if(count($blogs) > 0)
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-pink-50/60 border-b border-pink-100 text-xs font-bold text-pink-700/80 uppercase tracking-wider">
-                                <th class="py-4 px-6 text-center w-20">ID</th>
-                                <th class="py-4 px-6 min-w-[280px]">ชื่อบทความ</th>
-                                <th class="py-4 px-6 text-center">สถานะ</th>
-                                <th class="py-4 px-6 text-center w-28">แก้ไข</th>
-                                <th class="py-4 px-6 text-center w-28">การจัดการ</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-pink-50 text-sm">
-                            @foreach ($blogs as $item)
-                                <tr class="hover:bg-pink-50/30 transition duration-150">
-                                    <td class="py-4 px-6 text-center font-bold text-pink-400">
-                                        #{{ $item->id }}
-                                    </td>
-                                    <td class="py-4 px-6">
-                                        <div class="font-bold text-slate-800 text-base mb-0.5">
-                                            {{ $item->title }}
-                                        </div>
-                                        <div class="text-xs text-slate-500 line-clamp-1">
-                                            {{ Str::limit(strip_tags($item->content), 95) }}
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-6 text-center">
-                                        @if ($item->status)
-                                            <a href="{{ route('change', $item->id) }}" 
-                                               class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition shadow-xs"
-                                               title="คลิกเพื่อเปลี่ยนเป็นฉบับร่าง">
-                                                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                                                เผยแพร่แล้ว
-                                            </a>
-                                        @else
-                                            <a href="{{ route('change', $item->id) }}" 
-                                               class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 hover:bg-amber-100 transition shadow-xs"
-                                               title="คลิกเพื่อเผยแพร่บทความ">
-                                                <span class="w-2 h-2 rounded-full bg-amber-500"></span>
-                                                ฉบับร่าง
-                                            </a>
-                                        @endif
-                                    </td>
-                                    <td class="py-4 px-6 text-center">
-                                        <a href="{{ route('edit', $item->id) }}" 
-                                           class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-pink-600 bg-pink-50 border border-pink-200 rounded-xl hover:bg-pink-100 transition shadow-xs">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-                                            </svg>
-                                            แก้ไข
-                                        </a>
-                                    </td>
-                                    <td class="py-4 px-6 text-center">
-                                        <a href="{{ route('delete', $item->id) }}" 
-                                           class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl hover:bg-rose-100 transition shadow-xs"
-                                           onclick="return confirm('คุณต้องการลบบทความนี้จริงหรือไม่?')">
-                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                            </svg>
-                                            ลบ
-                                        </a>
-                                    </td>
+        @if (count($blogs) > 0)
+            <div class="card-modern overflow-hidden border-0">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0"
+                            style="border-collapse: separate; border-spacing: 0;">
+                            <thead style="background: var(--dark-gradient);">
+                                <tr>
+                                    <th class="text-white py-3 px-4" style="width: 8%; font-weight: 600;">#</th>
+                                    <th class="text-white py-3" style="width: 25%; font-weight: 600;">หัวข้อ (Title)</th>
+                                    <th class="text-white py-3" style="width: 40%; font-weight: 600;">เนื้อหา (Content)</th>
+                                    <th class="text-white py-3" style="width: 15%; font-weight: 600;">สถานะ (Status)</th>
+                                    <th class="text-white py-3" style="width: 12%; font-weight: 600;">วันที่สร้าง</th>
+                                    <th class="text-white py-3 px-4 text-center" style="width: 10%; font-weight: 600;">
+                                        จัดการ</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination Links -->
-                <div class="px-6 py-4 border-t border-pink-100 bg-pink-50/20">
-                    {{ $blogs->links() }}
-                </div>
-            @else
-                <!-- Empty State -->
-                <div class="p-16 text-center">
-                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-pink-50 border border-pink-100 flex items-center justify-center text-pink-500 text-2xl">
-                        🌸
+                            </thead>
+                            <tbody>
+                                @foreach ($blogs as $blog)
+                                    <tr style="transition: var(--transition);">
+                                        <td class="fw-bold text-secondary py-3 px-4">
+                                            {{ ($blogs->currentPage() - 1) * $blogs->perPage() + $loop->iteration }}</td>
+                                        <td class="py-3">
+                                            <span class="fw-semibold text-dark">{{ $blog->title }}</span>
+                                        </td>
+                                        <td class="py-3">
+                                            <span class="text-muted text-wrap d-inline-block text-truncate"
+                                                style="max-width: 400px; font-size: 0.95rem;">
+                                                {{ Str::limit($blog->content, 100, '...') }}
+                                            </span>
+                                        </td>
+                                        <td class="py-3">
+                                            @if ($blog->status)
+                                                <span
+                                                    class="badge rounded-pill bg-success-subtle text-success border border-success-subtle px-3 py-2"
+                                                    style="font-weight: 500;">
+                                                    🟢 เผยแพร่แล้ว
+                                                </span>
+                                            @else
+                                                <span class="badge rounded-pill px-3 py-2"
+                                                    style="background: var(--pink-100); color: var(--plum-900); font-weight: 500;">
+                                                    🎀 ฉบับร่าง
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="py-3">
+                                            <small class="text-muted"
+                                                style="font-weight: 500;">{{ $blog->created_at ? \Carbon\Carbon::parse($blog->created_at)->format('d/m/Y') : '-' }}</small>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="d-flex gap-2 justify-content-center">
+                                                <a href="{{ route('blog.edit', $blog->id) }}"
+                                                    class="btn btn-warning btn-sm text-white py-1 px-3 shadow-none"
+                                                    style="border-radius: 8px; font-weight: 500;">
+                                                    แก้ไข
+                                                </a>
+                                                <form action="{{ route('blog.delete', $blog->id) }}" method="POST"
+                                                    onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทความนี้?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="btn btn-modern-danger btn-sm py-1 px-3 shadow-none">
+                                                        ลบ
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                    <h3 class="text-lg font-bold text-slate-800 mb-1">ไม่มีข้อมูลบทความในขณะนี้</h3>
-                    <p class="text-sm text-slate-500 mb-6">เริ่มต้นสร้างและแบ่งปันบทความแรกของคุณ</p>
-                    <a href="{{ route('create') }}" 
-                       class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-white bg-gradient-to-r from-pink-500 to-rose-400 hover:from-pink-600 hover:to-rose-500 rounded-xl shadow-md transition">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                        </svg>
-                        เขียนบทความใหม่
-                    </a>
                 </div>
-            @endif
-        </div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-4">
+                {{ $blogs->links('pagination::bootstrap-5') }}
+            </div>
+        @else
+            <div class="card-modern border-0 text-center py-5 text-muted">
+                <div class="py-4">
+                    <span class="fs-1 d-block mb-3">📁</span>
+                    <h2 class="fs-5 fw-bold text-dark mb-1">ไม่มีบทความ</h2>
+                    <p class="text-muted mb-0">ยังไม่มีบทความในระบบ ลองเพิ่มบทความใหม่ดูสิ</p>
+                </div>
+            </div>
+        @endif
     </div>
-</div>
 @endsection

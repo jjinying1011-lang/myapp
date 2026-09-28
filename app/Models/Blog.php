@@ -1,6 +1,5 @@
 <?php
 
-// app/Models/Blog.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +9,10 @@ class Blog extends Model
 {
     use HasFactory;
 
-    protected $table = "blogs";
-    protected $primaryKey = "id";
-    protected $fillable = ["title", "content", "status"];
+    protected $fillable = [
+        'title',
+        'content',
+        'status',
+    ];
+    
 }

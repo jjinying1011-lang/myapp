@@ -11,12 +11,6 @@
 
 use Symfony\Polyfill\Php83 as p;
 
-if (!class_exists('ValueError', false)) {
-    class ValueError extends Error
-    {
-    }
-}
-
 if (extension_loaded('mbstring')) {
     if (!function_exists('mb_str_pad')) {
         /** @return string|false */

@@ -1,126 +1,92 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
-
-use App\Models\Blog;
+ 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Carbon\Carbon;
+ 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        $blogs = DB::table("blogs")->paginate(5);
-        return view("home", compact('blogs'));
+        $blogs = DB::table('blogs')->orderBy('id', 'desc')->paginate(5);
+        return view('index', compact('blogs'));
     }
-
-    function blog()
+ 
+    public function blog()
     {
-        $blogs = Blog::paginate(10);
+        $blogs = DB::table("blogs")->orderBy('id', 'desc')->paginate(5);
         return view("blog", compact('blogs'));
     }
-
-    public function showIndex()
+ 
+    public function edit($id)
     {
-        $blogs = DB::table("blogs")->paginate(5);
-        return view("index", compact('blogs'));
+        $blog = DB::table('blogs')->where('id', $id)->first();
+        if (!$blog) {
+            return redirect()->route('blog')->with('error', 'ไม่พบข้อมูลบทความที่ต้องการแก้ไข');
+        }
+        return view('form_edit_blogs', compact('blog'));
     }
-
-    public function blog2()
+ 
+    public function update(Request $request, $id)
     {
-        $blogs = DB::table("blogs")->paginate(5);
-        return view('blog2', compact('blogs'));
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'status' => 'required|in:0,1',
+        ], [
+            'title.required' => 'กรุณากรอกหัวข้อบทความ',
+            'title.max' => 'หัวข้อบทความต้องไม่เกิน 255 ตัวอักษร',
+            'content.required' => 'กรุณากรอกเนื้อหาบทความ',
+            'status.required' => 'กรุณาเลือกสถานะการเผยแพร่',
+            'status.in' => 'สถานะการเผยแพร่ไม่ถูกต้อง',
+        ]);
+ 
+        DB::table('blogs')->where('id', $id)->update([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'status' => $validated['status'],
+            'updated_at' => Carbon::now(),
+        ]);
+ 
+        return redirect()->route('blog')->with('success', 'แก้ไขบทความเรียบร้อยแล้ว');
     }
-
-    function delete($id)
-    {
-       Blog::find($id)->delete();
-        return redirect()->back();
-    }
-
+ 
     public function create()
     {
-        return view('insert'); 
+        return view('form_add_blogs');
     }
-
+ 
     public function insert(Request $request)
     {
-        $data = [
-            'title'      => $request->title,
-            'content'    => $request->content,
-            'status'     => $request->status ?? 0,
-            'created_at' => now(),
-            'updated_at' => now(), 
-        ];
-
-        DB::table("blogs")->insert($data);
-
-        // บันทึกเสร็จ ให้เด้งกลับไปหน้าเดิม (ถ้ามี ref) หรือกลับไป blog
-        if ($request->has('ref')) {
-            $redirectTo = $request->input('ref');
-        } else {
-            $previousUrl = url()->previous();
-            
-            if (str_contains($previousUrl, 'author/blog')) {
-                $redirectTo = url('/author/blog');
-            } else {
-                $redirectTo = route('blog2'); 
-            }
-        }
-        return redirect($redirectTo);
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'status' => 'required|in:0,1',
+        ], [
+            'title.required' => 'กรุณากรอกหัวข้อบทความ',
+            'title.max' => 'หัวข้อบทความต้องไม่เกิน 255 ตัวอักษร',
+            'content.required' => 'กรุณากรอกเนื้อหาบทความ',
+            'status.required' => 'กรุณาเลือกสถานะการเผยแพร่',
+            'status.in' => 'สถานะการเผยแพร่ไม่ถูกต้อง',
+        ]);
+ 
+        DB::table('blogs')->insert([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'status' => $validated['status'],
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
+ 
+        return redirect()->route('index')->with('success', 'บันทึกบทความเรียบร้อยแล้วด้วย Query Builder');
     }
-
-    function change($id)
+ 
+    public function delete($id)
     {
-        $blogs = Blog::find($id);
-
-        if ($blogs) {
-            $newStatus = $blogs->status == 1 ? 0 : 1;
-            DB::table("blogs")->where('id', $id)->update(['status' => $newStatus]);
-        }
-
-       return redirect()->back();
-    }
-
-    function edit($id)
-    {
-        $blogs = Blog::find($id);
-        return view('edit', compact('blogs')); 
-    }
-
-    function update(Request $request, $id)
-    {
-        $data = [
-            'title'   => $request->title,
-            'content' => $request->content,
-            'status'  => $request->status,
-            'updated_at' => now(),
-        ];
-        
-       Blog::find($id)->update($data);
-
-        // อัปเดตเสร็จ ให้เด้งกลับไปหน้าเดิม (ถ้ามี ref) หรือกลับไป blog2
-        if ($request->has('ref')) {
-            $redirectTo = $request->input('ref');
-        } else {
-            $previousUrl = url()->previous();
-            
-            if (str_contains($previousUrl, 'author/blog')) {
-                $redirectTo = url('/author/blog');
-            } else {
-                $redirectTo = route('blog2'); 
-            }
-        }
-        return redirect($redirectTo);
-    }
-
-    public function goBack()
-    {
-        return redirect()->back();
+        DB::table('blogs')->where('id', $id)->delete();
+        return redirect()->route('index')->with('success', 'ลบบทความเรียบร้อยแล้วด้วย Query Builder');
     }
 }
+ 
