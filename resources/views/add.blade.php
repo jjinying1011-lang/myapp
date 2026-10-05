@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             /* Milk-pink palette */
@@ -61,7 +64,8 @@
             box-shadow: 0 20px 25px -5px rgba(244, 105, 156, 0.14), 0 10px 10px -5px rgba(244, 105, 156, 0.08);
         }
 
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 12px;
             padding: 0.8rem 1rem;
             border-color: var(--border-color);
@@ -70,7 +74,8 @@
             transition: var(--transition);
         }
 
-        .form-control:focus, .form-select:focus {
+        .form-control:focus,
+        .form-select:focus {
             background-color: #ffffff;
             box-shadow: 0 0 0 4px rgba(244, 105, 156, 0.18);
             border-color: var(--pink-400);
@@ -114,72 +119,79 @@
         }
     </style>
 </head>
+
 <body>
 
-<div class="container main-container" style="max-width: 650px;">
-    
-    <div class="alert border-0 shadow-sm mb-4 d-flex align-items-center" role="alert" style="border-radius: 16px; background-color: #fffbeb; border: 1px solid #fef3c7 !important; color: #b45309;">
-        <div class="d-flex align-items-center gap-2">
-            <span class="fs-4">⚠️</span>
+    <div class="container main-container" style="max-width: 650px;">
+
+        <div class="alert border-0 shadow-sm mb-4 d-flex align-items-center" role="alert"
+            style="border-radius: 16px; background-color: #fffbeb; border: 1px solid #fef3c7 !important; color: #b45309;">
+            <div class="d-flex align-items-center gap-2">
+                <span class="fs-4">⚠️</span>
+                <div>
+                    <strong>หมายเหตุ:</strong> หน้านี้อยู่ระหว่างการพัฒนา (ระบบฟอร์มจำลอง
+                    ยังไม่มีการบันทึกข้อมูลลงฐานข้อมูลจริง)
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
             <div>
-                <strong>หมายเหตุ:</strong> หน้านี้อยู่ระหว่างการพัฒนา (ระบบฟอร์มจำลอง ยังไม่มีการบันทึกข้อมูลลงฐานข้อมูลจริง)
+                <h1 class="fw-extrabold tracking-tight mb-1"
+                    style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 2rem;">
+                    เพิ่มสมาชิกใหม่
+                </h1>
+                <p class="text-muted mb-0">กรอกข้อมูลผู้ใช้งานจำลองในหน้านี้</p>
             </div>
+            <a href="{{ route('home') }}" class="btn-modern-secondary d-inline-flex align-items-center gap-2">
+                <span>⬅️</span> กลับหน้าหลัก
+            </a>
+        </div>
+
+        <div class="card-modern p-4 p-md-5 border-0">
+            <form action="#" method="GET"
+                onsubmit="alert('จำลองการส่งข้อมูลสำเร็จ (ยังไม่ลง Database)'); return false;">
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">ชื่อ-นามสกุล</label>
+                    <input type="text" class="form-control" placeholder="เช่น ภคนันต์ หวังดี" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อีเมล</label>
+                    <input type="email" class="form-control" placeholder="เช่น phakhanan.w@example.com" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">เบอร์โทรศัพท์</label>
+                    <input type="tel" class="form-control" placeholder="เช่น 089-123-4567" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">สถานะการใช้งาน</label>
+                    <select class="form-select">
+                        <option value="active">🟢 ใช้งานอยู่ (Active)</option>
+                        <option value="inactive">🔴 ระงับการใช้งาน (Inactive)</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อัปโหลดรูปโปรไฟล์</label>
+                    <input type="file" class="form-control" accept="image/*">
+                </div>
+
+                <hr class="my-4" style="border-color: var(--border-color);">
+
+                <div class="d-flex justify-content-end gap-3">
+                    <a href="{{ route('home') }}" class="btn-modern-secondary">ยกเลิก</a>
+                    <button type="submit" class="btn-modern-primary">💾 บันทึกข้อมูล (จำลอง)</button>
+                </div>
+
+            </form>
         </div>
     </div>
-
-    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-3 mb-4">
-        <div>
-            <h1 class="fw-extrabold tracking-tight mb-1" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 2rem;">
-                เพิ่มสมาชิกใหม่
-            </h1>
-            <p class="text-muted mb-0">กรอกข้อมูลผู้ใช้งานจำลองในหน้านี้</p>
-        </div>
-        <a href="{{ route('home') }}" class="btn-modern-secondary d-inline-flex align-items-center gap-2">
-            <span>⬅️</span> กลับหน้าหลัก
-        </a>
-    </div>
-
-    <div class="card-modern p-4 p-md-5 border-0">
-        <form action="#" method="GET" onsubmit="alert('จำลองการส่งข้อมูลสำเร็จ (ยังไม่ลง Database)'); return false;">
-            
-            <div class="mb-4">
-                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">ชื่อ-นามสกุล</label>
-                <input type="text" class="form-control" placeholder="เช่น ภคนันต์ หวังดี" required>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อีเมล</label>
-                <input type="email" class="form-control" placeholder="เช่น phakhanan.w@example.com" required>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">เบอร์โทรศัพท์</label>
-                <input type="tel" class="form-control" placeholder="เช่น 089-123-4567" required>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">สถานะการใช้งาน</label>
-                <select class="form-select">
-                    <option value="active">🟢 ใช้งานอยู่ (Active)</option>
-                    <option value="inactive">🔴 ระงับการใช้งาน (Inactive)</option>
-                </select>
-            </div>
-
-            <div class="mb-4">
-                <label class="form-label fw-semibold mb-2" style="color: var(--plum-900);">อัปโหลดรูปโปรไฟล์</label>
-                <input type="file" class="form-control" accept="image/*">
-            </div>
-
-            <hr class="my-4" style="border-color: var(--border-color);">
-
-            <div class="d-flex justify-content-end gap-3">
-                <a href="{{ route('home') }}" class="btn-modern-secondary">ยกเลิก</a>
-                <button type="submit" class="btn-modern-primary">💾 บันทึกข้อมูล (จำลอง)</button>
-            </div>
-
-        </form>
-    </div>
-</div>
 
 </body>
+
 </html>

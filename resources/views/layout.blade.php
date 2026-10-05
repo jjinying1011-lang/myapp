@@ -7,12 +7,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') | Phakhanan Wangdee</title>
     <!-- Bootstrap 5.3.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Google Fonts: Plus Jakarta Sans & Noto Sans Thai -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             /* Milk-pink palette */
@@ -55,13 +58,16 @@
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: var(--pink-50);
         }
+
         ::-webkit-scrollbar-thumb {
             background: var(--pink-300);
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: var(--pink-400);
         }
@@ -97,7 +103,7 @@
             transition: var(--transition);
         }
 
-        .navbar-custom .nav-link:hover, 
+        .navbar-custom .nav-link:hover,
         .navbar-custom .nav-link.active {
             color: #ffffff !important;
             background: rgba(255, 255, 255, 0.12);
@@ -207,28 +213,35 @@
 <nav class="navbar navbar-expand-lg navbar-custom sticky-top navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ route('index') }}">PHAKHANAN WANGDEE</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto gap-1 align-items-lg-center">
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('index') ? 'active' : '' }}" href="{{ route('index') }}">หน้าแรก (Admin Blogs)</a>
+                    <a class="nav-link {{ Route::is('index') ? 'active' : '' }}" href="{{ route('index') }}">หน้าแรก
+                        (Admin Blogs)</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Dashboard สมาชิก</a>
+                    <a class="nav-link {{ Route::is('home') ? 'active' : '' }}" href="{{ route('home') }}">Dashboard
+                        สมาชิก</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('blogs') ? 'active' : '' }}" href="{{ route('blogs') }}">บทความทั่วไป</a>
+                    <a class="nav-link {{ Route::is('blogs') ? 'active' : '' }}"
+                        href="{{ route('blogs') }}">บทความทั่วไป</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('abouts') ? 'active' : '' }}" href="{{ route('abouts') }}">เกี่ยวกับเรา</a>
+                    <a class="nav-link {{ Route::is('abouts') ? 'active' : '' }}"
+                        href="{{ route('abouts') }}">เกี่ยวกับเรา</a>
                 </li>
                 <li class="nav-item ms-lg-3 d-flex align-items-center gap-2 mt-2 mt-lg-0">
                     <span class="navbar-text text-white small" style="font-weight: 500;">
-                        👋 สวัสดี, <span style="color: #ffd1e4; font-weight: 700;">{{ session('user_logged_in', 'Phakhanan Wangdee') }}</span>
+                        👋 สวัสดี, <span
+                            style="color: #ffd1e4; font-weight: 700;">{{ session('user_logged_in', 'Phakhanan Wangdee') }}</span>
                     </span>
-                    <a href="{{ route('logout') }}" class="btn btn-outline-light btn-sm px-2.5 py-1" style="border-radius: 8px; font-size: 0.8rem; border-color: rgba(255,255,255,0.3);">
+                    <a href="{{ route('logout') }}" class="btn btn-outline-light btn-sm px-2.5 py-1"
+                        style="border-radius: 8px; font-size: 0.8rem; border-color: rgba(255,255,255,0.3);">
                         ออกจากระบบ
                     </a>
                 </li>
@@ -250,7 +263,9 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
